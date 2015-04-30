@@ -1,0 +1,18 @@
+#set ($strLen = ${table.className.length()})
+#set ($lowerName = ${table.className.substring(0, 1).toLowerCase()}+${table.className.substring(1, $strLen)})
+package ${packageName}.controller;
+
+import org.springframework.stereotype.Controller;
+import ${packageName}.Service.${table.className}Service;
+/**
+ * Controller层
+ * @author ${author}
+ * @since 1.0
+ */
+@Controller
+public class ${table.className}Controller {
+
+    private Logger logger = Logger.getLogger(${table.className}Controller.class);
+    @Inject
+    ${table.className}Service ${lowerName}Service;
+}

@@ -1,0 +1,39 @@
+#set ($strLen = ${table.className.length()})
+#set ($lowerName = ${table.className.substring(0, 1).toLowerCase()}+${table.className.substring(1, $strLen)})
+package ${packageName}.service;
+
+import ${packageName}.entity.${table.className}Entity;
+import ${packageName}.repository.${table.className}Repository;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import javax.inject.Inject;
+/**
+* ${table.className}Service对象
+* @author ${author}
+* @since 1.0
+*/
+@Service
+public class ${table.className}Service {
+
+    @Inject
+    ${table.className}Repository ${lowerName}Repository;
+
+    @Transactional
+    public void create(${table.className}Entity ${lowerName}Entity) {
+        ${lowerName}Repository.create(${lowerName}Entity);
+    }
+
+    @Transactional
+    public void deleteById(Integer id) {
+        ${lowerName}Repository.delete(${table.className}Entity.class, id);
+    }
+
+    @Transactional
+    public void update(${table.className}Entity ${lowerName}Entity) {
+        ${lowerName}Repository.update(${lowerName}Entity);
+    }
+
+    public ${table.className}Entity findById(Integer id) {
+        return ${lowerName}Repository.get(${table.className}Entity.class, id);
+    }
+}

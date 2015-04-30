@@ -1,0 +1,48 @@
+##实体类代码
+package ${packageName}.model;
+
+import java.util.Date;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.Table;
+/**
+ * ${table.className}实体对象
+ * @author ${author}
+ * @since 1.0
+ */
+@Entity
+@Table(name = "${table.tableName}")
+public class ${table.className}Entity extends ParentEntity {
+
+#foreach($p in $table.columnList)
+#if($p.primaryKey == true)
+@Id
+#if($p.autoIncrement == true)
+@GeneratedValue
+#else
+@GeneratedValue(generator = "system-uuid")
+#end
+@Column(name = "${p.columnName}")
+private ${p.columnType} ${p.propertyName};
+
+#else
+@Column(name = "${p.columnName}")
+private ${p.columnType} ${p.propertyName};
+
+#end
+#end
+
+#foreach($p in $table.columnList)
+public ${p.columnType} ${p.propertyGetMethodName}() {
+return this.${p.propertyName};
+}
+
+public void ${p.propertySetMethodName}(${p.columnType} ${p.propertyName}) {
+this.${p.propertyName} = ${p.propertyName};
+}
+#end
+
+}

@@ -1,0 +1,81 @@
+##################################################################
+#   使用各种编辑器时，ide往往会向项目中加入特有的ide文件，
+#   这些文件并不需要加入到git版本库中，
+#   所以在项目目录下添加  .gitignore文件，进行文件过滤
+#
+##################################################################
+
+############################
+#  IDEA
+############################
+*.iml
+*.ipr
+*.iws
+.idea/
+atlassian-die-plugin.xml
+
+
+############################
+#  Eclipse
+############################
+*.pydevproject
+.project
+.metadata
+*.tmp
+*.bak
+*.swp
+*~.nib
+local.properties
+.classpath
+.settings/
+.loadpath
+
+# External tool builders
+.externalToolBuilders/
+
+# Locally stored "Eclipse launch configurations"
+*.launch
+
+# CDT-specific
+.cproject
+
+# PDT-specific
+.buildpath
+
+# Testing environment specific
+derby.log
+
+
+############################
+# NetBeans
+############################
+nbproject/
+build/
+nbbuild/
+dist/
+nbdist/
+nbactions.xml
+nb-configuration.xml
+
+############################
+# Directories
+############################
+build/
+bin/
+target/
+tmp/
+node_modules/
+
+# OS Files #
+.DS_Store
+
+*.class
+
+############################
+# Package Files
+############################
+*.jar
+*.war
+*.ear
+*.db
+rebel.xm
