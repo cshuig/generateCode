@@ -34,6 +34,7 @@ public class VelocityUtils {
 
         List<String> list = new ArrayList<>();
         list.add("entity.vm");
+        list.add("controller.vm");
         list.add("service.vm");
         list.add("repository.vm");
 

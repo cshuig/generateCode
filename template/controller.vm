@@ -13,6 +13,7 @@ import ${packageName}.Service.${table.className}Service;
 public class ${table.className}Controller {
 
     private Logger logger = Logger.getLogger(${table.className}Controller.class);
+
     @Inject
     ${table.className}Service ${lowerName}Service;
 }
