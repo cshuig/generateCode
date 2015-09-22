@@ -2,18 +2,51 @@
 #set ($lowerName = ${table.className.substring(0, 1).toLowerCase()}+${table.className.substring(1, $strLen)})
 package ${packageName}.controller;
 
+import ${packageName}.request.${table.className}Request;
+import ${packageName}.response.${table.className}Response;
+import ${packageName}.response.${table.className}ListResponse;
+import ${packageName}.service.${table.className}APIService;
+import ${packageName}.service.${table.className}Service;
+import com.jia.core.platform.web.rest.RESTController;
 import org.springframework.stereotype.Controller;
-import ${packageName}.Service.${table.className}Service;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
+
+import javax.inject.Inject;
+
 /**
  * Controller层
  * @author ${author}
  * @since 1.0
  */
 @Controller
-public class ${table.className}Controller {
-
-    private Logger logger = Logger.getLogger(${table.className}Controller.class);
+public class ${table.className}Controller extends RESTController implements ${table.className}APIService {
 
     @Inject
-    ${table.className}Service ${lowerName}Service;
+    private ${table.className}Service ${lowerName}Service;
+
+    @Override
+    public ${table.className}Response get(@PathVariable("id") Integer id) {
+        return ${lowerName}Service.get(id);
+    }
+
+    @Override
+    public void create(@RequestBody ${table.className}Request request) {
+        ${lowerName}Service.create(request);
+    }
+
+    @Override
+    public void update(@RequestBody ${table.className}Request request) {
+        ${lowerName}Service.update(request);
+    }
+
+    @Override
+    public void delete(@PathVariable("id") Integer id) {
+        ${lowerName}Service.delete(id);
+    }
+
+    @Override
+    public ${table.className}ListResponse list() {
+        return ${lowerName}Service.list();
+    }
 }

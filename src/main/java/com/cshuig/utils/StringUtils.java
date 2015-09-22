@@ -27,6 +27,8 @@ public class StringUtils {
 
         switch (databaseType) {
             case Types.DECIMAL:
+                colType = "BigDecimal";
+                break;
             case Types.REAL:
                 colType = "Float";
                 break;

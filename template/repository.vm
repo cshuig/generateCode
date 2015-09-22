@@ -3,7 +3,6 @@ package ${packageName}.repository;
 import org.springframework.stereotype.Repository;
 
 /**
-* ${table.className}Repository对象
 * @author ${author}
 * @since 1.0
 */

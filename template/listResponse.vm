@@ -1,0 +1,46 @@
+#set ($strLen = ${table.className.length()})
+#set ($lowerName = ${table.className.substring(0, 1).toLowerCase()}+${table.className.substring(1, $strLen)})
+package ${packageName}.request;
+
+import ${packageName}.domain.${table.className};
+
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
+import java.util.List;
+import java.util.ArrayList;
+
+/**
+ * @author ${author}
+ * @since 1.0
+ */
+@XmlRootElement(name = "${table.tableName.replace("_", "-")}-list-response")
+@XmlAccessorType(XmlAccessType.FIELD)
+public class ${table.className}ListResponse {
+
+    @XmlElement(name = "total-count")
+    private Integer totalCount;
+
+    @XmlElement(name = "${table.tableName.replace("_", "-")}-list")
+    private List<${table.className}> ${lowerName}List;
+
+    public Integer getTotalCount() {
+        return totalCount;
+    }
+
+    public void setTotalCount(Integer totalCount) {
+        this.totalCount = totalCount;
+    }
+
+    public List<${table.className}> get${table.className}List() {
+        if (${lowerName}List == null) {
+            ${lowerName}List = new ArrayList<>();
+        }
+        return ${lowerName}List;
+    }
+
+    public void set${table.className}List(List<${table.className}> ${lowerName}List) {
+        this.${lowerName}List = ${lowerName}List;
+    }
+}

@@ -1,0 +1,44 @@
+#set ($strLen = ${table.className.length()})
+#set ($lowerName = ${table.className.substring(0, 1).toLowerCase()}+${table.className.substring(1, $strLen)})
+package ${packageName}.service;
+
+import com.jia.core.platform.web.rest.api.API;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+import ${packageName}.request.${table.className}Request;
+import ${packageName}.response.${table.className}Response;
+import ${packageName}.response.${table.className}ListResponse;
+
+/**
+ * Controller层
+ * @author ${author}
+ * @since 1.0
+ */
+@API(serverName = "api.news")
+public interface ${table.className}APIService {
+
+    @RequestMapping(value = "/${table.tableName.replace("_", "-")}/{id}", method = RequestMethod.GET)
+    @ResponseBody
+    ${table.className}Response get(@PathVariable("id") Integer id);
+
+    @RequestMapping(value = "/${table.tableName.replace("_", "-")}", method = RequestMethod.POST)
+    @ResponseBody
+    void create(@RequestBody ${table.className}Request request);
+
+    @RequestMapping(value = "/${table.tableName.replace("_", "-")}", method = RequestMethod.PUT)
+    @ResponseBody
+    void update(@RequestBody ${table.className}Request request);
+
+    @RequestMapping(value = "/${table.tableName.replace("_", "-")}/{id}", method = RequestMethod.DELETE)
+    @ResponseBody
+    void delete(@PathVariable("id") Integer id);
+
+    @RequestMapping(value = "/${table.tableName.replace("_", "-")}/list", method = RequestMethod.GET)
+    @ResponseBody
+    ${table.className}ListResponse list();
+
+}

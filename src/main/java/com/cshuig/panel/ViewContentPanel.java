@@ -65,7 +65,7 @@ public class ViewContentPanel {
 
     public void setjTextFieldUserName(JTextField jTextFieldUserName) {
         this.jTextFieldUserName = jTextFieldUserName;
-        this.jTextFieldUserName.setText("usvr_aquarius");
+        this.jTextFieldUserName.setText("usvr_erpsite");
         this.jTextFieldUserName.setBounds(110, 70, textWidth, textHeight);
         this.addComppnent(jTextFieldUserName);
 
@@ -77,7 +77,7 @@ public class ViewContentPanel {
 
     public void setjTextFieldPassword(JTextField jTextFieldPassword) {
         this.jTextFieldPassword = jTextFieldPassword;
-        this.jTextFieldPassword.setText("QjgGo7df1Oos");
+        this.jTextFieldPassword.setText("bloss@m072!sun");
         this.jTextFieldPassword.setBounds(110, 110, textWidth, textHeight);
         this.addComppnent(jTextFieldPassword);
 
@@ -89,7 +89,7 @@ public class ViewContentPanel {
 
     public void setjTextFieldUrl(JTextField jTextFieldUrl) {
         this.jTextFieldUrl = jTextFieldUrl;
-        this.jTextFieldUrl.setText("jdbc:mysql://cn-jia-db3.suryani.cn/");
+        this.jTextFieldUrl.setText("jdbc:mysql://jia-blossom-erp-srv1.suryani.cn/bls_customer");
         this.jTextFieldUrl.setBounds(110, 150, textWidth, textHeight);
         this.addComppnent(jTextFieldUrl);
 
@@ -101,7 +101,7 @@ public class ViewContentPanel {
 
     public void setjTextFieldPackageName(JTextField jTextFieldPackageName) {
         this.jTextFieldPackageName = jTextFieldPackageName;
-        this.jTextFieldPackageName.setText("com.suryani.aquarius");
+        this.jTextFieldPackageName.setText("com.jia.blossom.customer");
         this.jTextFieldPackageName.setBounds(110, 190, textWidth, textHeight);
         this.addComppnent(this.getjTextFieldPackageName());
 

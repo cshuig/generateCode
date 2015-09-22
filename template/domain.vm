@@ -1,0 +1,35 @@
+package ${packageName}.domain;
+
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
+import java.util.Date;
+import java.math.BigDecimal;
+
+/**
+ * @author ${author}
+ * @since 1.0
+ */
+@XmlRootElement(name = "${table.tableName.replace("_", "-")}")
+@XmlAccessorType(XmlAccessType.FIELD)
+public class ${table.className} {
+
+#foreach($p in $table.columnList)
+    #if($p.columnComment)/** ${p.columnComment} */#end##
+
+    @XmlElement(name = "${p.columnName.replace("_", "-")}")
+    private ${p.columnType} ${p.propertyName};
+
+#end
+
+#foreach($p in $table.columnList)
+    public ${p.columnType} ${p.propertyGetMethodName}() {
+        return this.${p.propertyName};
+    }
+
+    public void ${p.propertySetMethodName}(${p.columnType} ${p.propertyName}) {
+        this.${p.propertyName} = ${p.propertyName};
+    }
+#end
+}

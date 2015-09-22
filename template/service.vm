@@ -7,33 +7,76 @@ import ${packageName}.repository.${table.className}Repository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import javax.inject.Inject;
+
+import ${packageName}.util.BeanUtilsEx;
+import com.jia.core.platform.exception.ResourceNotFoundException;
+import ${packageName}.domain.${table.className};
+import ${packageName}.response.${table.className}Response;
+import ${packageName}.response.${table.className}ListResponse;
+import ${packageName}.request.${table.className}Request;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Date;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 /**
-* ${table.className}Service对象
 * @author ${author}
 * @since 1.0
 */
 @Service
 public class ${table.className}Service {
 
+    private static final Logger LOGGER = LoggerFactory.getLogger(${table.className}Service.class);
+
     @Inject
     ${table.className}Repository ${lowerName}Repository;
 
+    public ${table.className}Response get(Integer id) {
+        ${table.className}Response ${lowerName}Response = new ${table.className}Response();
+        ${table.className} ${lowerName} = new ${table.className}();
+        ${table.className}Entity ${lowerName}Entity = ${lowerName}Repository.findOneById(${table.className}Entity.class, id);
+        if (${lowerName}Entity == null) {
+            LOGGER.error("resource id={} is not found", id);
+            throw new ResourceNotFoundException("resource id=" + id + " is not found");
+        }
+        BeanUtilsEx.copyProperties(${lowerName}Entity, ${lowerName});
+        ${lowerName}Response.set${table.className}($lowerName);
+        return ${lowerName}Response;
+    }
+
+    public ${table.className}ListResponse list() {
+        ${table.className}ListResponse ${lowerName}ListResponse = new ${table.className}ListResponse();
+        List<${table.className}Entity> ${lowerName}EntityList = ${lowerName}Repository.findByAttributes(${table.className}Entity.class, null, null);
+        List<${table.className}> resultList = new ArrayList<>();
+        for (${table.className}Entity entity : ${lowerName}EntityList) {
+            ${table.className} ${lowerName} = new ${table.className}();
+            BeanUtilsEx.copyProperties(entity, ${lowerName});
+            resultList.add(${lowerName});
+        }
+        ${lowerName}ListResponse.setTotalCount(${lowerName}Repository.findCountByAttributes(${table.className}Entity.class, null));
+        ${lowerName}ListResponse.set${table.className}List(resultList);
+        return ${lowerName}ListResponse;
+    }
+
     @Transactional
-    public void create(${table.className}Entity ${lowerName}Entity) {
+    public void create(${table.className}Request request) {
+        ${table.className}Entity ${lowerName}Entity = new ${table.className}Entity();
+        BeanUtilsEx.copyProperties(request.get${table.className}(), ${lowerName}Entity);
         ${lowerName}Repository.create(${lowerName}Entity);
     }
 
     @Transactional
-    public void deleteById(Integer id) {
-        ${lowerName}Repository.delete(${table.className}Entity.class, id);
-    }
-
-    @Transactional
-    public void update(${table.className}Entity ${lowerName}Entity) {
+    public void update(${table.className}Request request) {
+        ${table.className}Entity ${lowerName}Entity = ${lowerName}Repository.findOneById(${table.className}Entity.class, request.get${table.className}().getId());
+        BeanUtilsEx.copyProperties(request.get${table.className}(), ${lowerName}Entity);
+        ${lowerName}Entity.setUpdateDate(new Date());
         ${lowerName}Repository.update(${lowerName}Entity);
     }
 
-    public ${table.className}Entity findById(Integer id) {
-        return ${lowerName}Repository.get(${table.className}Entity.class, id);
+    @Transactional
+    public void delete(Integer id) {
+        ${lowerName}Repository.deleteById(${table.className}Entity.class, id);
     }
+
 }

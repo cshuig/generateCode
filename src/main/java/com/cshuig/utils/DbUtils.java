@@ -31,7 +31,7 @@ public class DbUtils {
         database.setDbType(databaseMetaData.getDatabaseProductName());
         database.setDbVersion(databaseMetaData.getDatabaseProductVersion());
 
-        ResultSet resultSet = databaseMetaData.getTables(null, database.getInputInfo().getSchema(), null, new String[] {"TABLE"});
+        ResultSet resultSet = databaseMetaData.getTables(connection.getCatalog(), database.getInputInfo().getSchema(), null, new String[] {"TABLE"});
         while (resultSet.next()) {
             Table table = new Table();
             table.setTableName(resultSet.getString("TABLE_NAME"));

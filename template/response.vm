@@ -1,0 +1,30 @@
+#set ($strLen = ${table.className.length()})
+#set ($lowerName = ${table.className.substring(0, 1).toLowerCase()}+${table.className.substring(1, $strLen)})
+package ${packageName}.response;
+
+import ${packageName}.domain.${table.className};
+
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
+/**
+ * @author ${author}
+ * @since 1.0
+ */
+@XmlRootElement(name = "get-${table.tableName.replace("_", "-")}-response")
+@XmlAccessorType(XmlAccessType.FIELD)
+public class ${table.className}Response {
+
+    @XmlElement(name = "${table.tableName.replace("_", "-")}")
+    private ${table.className} $lowerName;
+
+
+    public ${table.className} get${table.className}() {
+        return this.$lowerName;
+    }
+
+    public void set${table.className}(${table.className} $lowerName) {
+        this.$lowerName = $lowerName;
+    }
+}
