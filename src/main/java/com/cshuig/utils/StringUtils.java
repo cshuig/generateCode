@@ -63,7 +63,6 @@ public class StringUtils {
                 colType = "String";
                 break;
         }
-
         return colType;
     }
 }

@@ -18,7 +18,7 @@ import ${packageName}.response.${table.className}ListResponse;
  * @author ${author}
  * @since 1.0
  */
-@API(serverName = "api.news")
+@API(serverName = "api.orderdecision")
 public interface ${table.className}APIService {
 
     @RequestMapping(value = "/${table.tableName.replace("_", "-")}/{id}", method = RequestMethod.GET)

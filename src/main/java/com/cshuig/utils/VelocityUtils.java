@@ -1,7 +1,6 @@
 package com.cshuig.utils;
 
 import com.cshuig.model.Database;
-import com.cshuig.model.Table;
 import org.apache.log4j.Logger;
 import org.apache.velocity.Template;
 import org.apache.velocity.VelocityContext;
@@ -21,19 +20,19 @@ import java.util.List;
  * Created by cshuig on 15/4/26.
  */
 public class VelocityUtils {
-    private Logger logger = Logger.getLogger(VelocityUtils.class);
+    private static final Logger LOGGER = Logger.getLogger(VelocityUtils.class);
 
     public static void generateCode(Database database) {
-        VelocityContext context = new VelocityContext();
-        VelocityEngine velocityEngine = new VelocityEngine();
-        String tpath = System.getProperty("user.dir") + "/template";
-        System.out.println("tpath = " + tpath);
+        final VelocityContext context = new VelocityContext();
+        final VelocityEngine velocityEngine = new VelocityEngine();
+        final String tpath = System.getProperty("user.dir") + "/template";
         velocityEngine.setProperty(Velocity.FILE_RESOURCE_LOADER_PATH, tpath);
         velocityEngine.setProperty(Velocity.INPUT_ENCODING, "UTF-8");
         velocityEngine.setProperty(Velocity.OUTPUT_ENCODING, "UTF-8");
         velocityEngine.init();
 
-        List<String> templateList = new ArrayList<>();
+        // 暂时这么写死
+        final List<String> templateList = new ArrayList<>();
         templateList.add("entity.vm");
         templateList.add("domain.vm");
         templateList.add("request.vm");
@@ -44,37 +43,38 @@ public class VelocityUtils {
         templateList.add("APIService.vm");
         templateList.add("repository.vm");
 
-        for (Table table : database.getTableList()) {
-            if (!database.getInputInfo().getSelectTableList().contains(table.getTableName())) continue;
-            context.put("table", table);
-            context.put("packageName", database.getInputInfo().getPackageName());
-            context.put("author", database.getInputInfo().getAuthor());
-            context.put("date", new Date());
+        database.getTableList()
+                .stream()
+                .filter(t -> database.getInputInfo().getSelectTableList().contains(t.getTableName()))
+                .forEach(table -> {
+                    context.put("table", table);
+                    context.put("packageName", database.getInputInfo().getPackageName());
+                    context.put("author", database.getInputInfo().getAuthor());
+                    context.put("date", new Date());
 
-            for (String templateName : templateList) {
-                String templatePrefixName = templateName.substring(0, templateName.indexOf("."));
-                Template template = velocityEngine.getTemplate(templateName);
-                StringWriter stringWriter = new StringWriter();
-                template.merge(context, stringWriter);
-                StringBuilder sb = new StringBuilder();
-                sb.append(database.getInputInfo().getOurDir() + File.separator + "src/");
-                sb.append(database.getInputInfo().getPackageName().replace(".", "/")).append(File.separator);
-                if (templatePrefixName.toLowerCase().indexOf("response") > 0) {
-                    sb.append("response");
-                } else {
-                    sb.append(templateName.substring(0, templateName.indexOf(".")));
-                }
-                File pathTemp = new File(sb.toString());
-                if (!pathTemp.exists()) pathTemp.mkdirs();
-                if (templatePrefixName.equals("domain")) {
-                    sb.append(File.separator).append(table.getClassName() + ".java");
-                } else {
-                    sb.append(File.separator).append(table.getClassName() + StringUtils.upperFirestChar(templatePrefixName) + ".java");
-                }
-                writeFile(sb.toString(), stringWriter.toString());
-            }
-        }
-
+                    templateList.stream().forEach(templateName -> {
+                        String templatePrefixName = templateName.substring(0, templateName.indexOf("."));
+                        Template template = velocityEngine.getTemplate(templateName);
+                        StringWriter stringWriter = new StringWriter();
+                        template.merge(context, stringWriter);
+                        StringBuilder sb = new StringBuilder(100);
+                        sb.append(database.getInputInfo().getOurDir()).append(File.separator).append("src/");
+                        sb.append(database.getInputInfo().getPackageName().replace(".", "/")).append(File.separator);
+                        if (templatePrefixName.toLowerCase().indexOf("response") > 0) {
+                            sb.append("response");
+                        } else {
+                            sb.append(templateName.substring(0, templateName.indexOf(".")));
+                        }
+                        File pathTemp = new File(sb.toString());
+                        if (!pathTemp.exists()) pathTemp.mkdirs();
+                        if (templatePrefixName.equals("domain")) {
+                            sb.append(File.separator).append(table.getClassName() + ".java");
+                        } else {
+                            sb.append(File.separator).append(table.getClassName() + StringUtils.upperFirestChar(templatePrefixName) + ".java");
+                        }
+                        writeFile(sb.toString(), stringWriter.toString());
+                    });
+                });
     }
 
     public static void writeFile(String filePathAndName, String fileContent) {
