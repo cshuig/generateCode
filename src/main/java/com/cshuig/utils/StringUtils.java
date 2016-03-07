@@ -30,17 +30,18 @@ public class StringUtils {
                 colType = "BigDecimal";
                 break;
             case Types.REAL:
+            case Types.FLOAT :
                 colType = "Float";
+                break;
+
+            case Types.BIGINT:
+                colType = "BigInteger";
                 break;
 
             case Types.INTEGER:
-            case Types.BIGINT:
             case Types.TINYINT:
+            case Types.SMALLINT:
                 colType = "Integer";
-                break;
-
-            case Types.FLOAT :
-                colType = "Float";
                 break;
 
             case Types.DOUBLE :
@@ -58,7 +59,12 @@ public class StringUtils {
             case Types.TIMESTAMP:
                 colType="Date";
                 break;
-
+            case Types.BIT:
+                colType = "Boolean";
+                break;
+            case Types.BLOB:
+                colType = "byte[]";
+                break;
             default:
                 colType = "String";
                 break;
